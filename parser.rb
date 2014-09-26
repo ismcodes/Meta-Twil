@@ -4,7 +4,7 @@ require 'net/https'
 require 'sinatra'
 require 'twilio-ruby'
 
-get '/sms-quickstart' do
+post '/sms-quickstart' do
 	languages=["ruby","python", "java"]
 	body=params[:Body]||"lang"
 	body=body.downcase if body
