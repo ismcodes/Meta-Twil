@@ -1,5 +1,3 @@
 source 'https://rubygems.org'
 gem 'nokogiri'
-gem 'open-uri'
-gem 'net/https'
 gem 'sinatra'
