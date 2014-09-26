@@ -6,7 +6,9 @@ require 'sinatra'
 
 get '/sms-quickstart' do
 	languages=["ruby","python", "java"]
-	body=params[:Body].downcase
+	body=params[:Body]||"lang"
+	body=body.downcase if body
+
 	twiml = Twilio::TwiML::Response.new do |r|
 	unless languages.include?(body)
     		r.Message "Sorry, that language isn't in Twilio's docs. But these are: #{languages}"
