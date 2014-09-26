@@ -4,9 +4,9 @@ require 'net/https'
 require 'sinatra'
 require 'twilio-ruby'
 
-post '/sms-quickstart' do
+post '/' do
 	languages=["ruby","python", "java"]
-	body=params[:Body]||"lang"
+	body=params[:Body]
 	body=body.downcase if body
 
 	twiml = Twilio::TwiML::Response.new do |r|
