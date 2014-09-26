@@ -5,14 +5,18 @@ require 'sinatra'
 require 'twilio-ruby'
 
 post '/' do
-	languages=["ruby","python", "java"]
+	languages=["ruby","python", "java", "csharp", "php"]
 	body=params[:Body]
 	body=body.downcase if body
 
 	twiml = Twilio::TwiML::Response.new do |r|
+
 	unless languages.include?(body)
+    		if body=="about"||body=="hi"||body=="what"
+    			r.Message "MetaTwil made by Isaac Moldofsky. Text 'ruby' to see how to use Twilio!"
+    		else
     		r.Message "Sorry, that language isn't in Twilio's docs. But these are: #{languages}"
-  		
+  			end
 	else
 		r.Message get_twil(body)
 
