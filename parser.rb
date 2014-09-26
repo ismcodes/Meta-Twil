@@ -1,5 +1,23 @@
 require 'nokogiri'
 require 'open-uri'
 require 'net/https'
-site = Nokogiri::HTML(open("https://www.twilio.com/docs/quickstart/python/sms/hello-monkey",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
-puts site.css('pre')[0].to_s.gsub!(/(?<=<)(.*)(?=>)/,'').gsub!(/<>/,'')
+require 'sinatra'
+
+
+get '/sms-quickstart' do
+	languages=["ruby","python", "java"]
+	body=params[:Body].downcase
+	twiml = Twilio::TwiML::Response.new do |r|
+	unless languages.include?(body)
+    		r.Message "Sorry, that language isn't in Twilio's docs. But these are: #{languages}"
+  		
+	else
+		r.Message get_twil(body)
+
+	end
+	end
+	twiml.text
+end
+def get_twil(lang)
+Nokogiri::HTML(open("https://www.twilio.com/docs/quickstart/#{lang}/sms/hello-monkey",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE)).css('pre')[0].to_s.gsub!(/(?<=<)(.*)(?=>)/,'').gsub!(/<>/,'')
+end
